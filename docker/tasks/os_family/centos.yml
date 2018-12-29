@@ -1,0 +1,43 @@
+---
+- name: Ensure that yum works with the https method
+  yum: name={{ item }} state=present
+  with_items:
+    - yum-utils
+
+- name: install docker repository
+  shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+#- name: Add Docker repository
+  #yum_reitory:
+  #  name: repo
+   # gpgkey: https://download.docker.com/linux/centos/gpg
+#      gpgcheck: yes
+
+- name: Import Docker CE repository gpg key
+  rpm_key:
+    key: https://download.docker.com/linux/centos/gpg
+    state: present
+    validate_certs: yes
+
+- name: Add Docker CE repository
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+    force: yes
+    owner: root
+    group: root
+    mode: 0644
+
+- name: yum update
+  shell: "yum update -y"
+  notify: handler 1
+
+- name: Install docker package
+  yum: 
+    name: docker-ce
+    state: present
+    update_cache: yes 
+  notify: Start Docker
+  tags:
+    - docker
+    - install

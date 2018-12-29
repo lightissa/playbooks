@@ -1,0 +1,13 @@
+---
+
+- name: Add Elasticsearch repository.
+  copy:
+    src: elasticsearch.repo
+    dest: /etc/yum.repos.d/elasticsearch.repo
+    mode: 0644
+
+- name: Install elasticsearch and openjdk
+  yum: name={{ item }} state=present update_cache=yes
+  with_items:
+    - java-1.7.0-openjdk
+    - elasticsearch

@@ -1,0 +1,45 @@
+---
+- name: Ensure that APT works with the https method
+  apt: name={{ item }} state=present
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - software-properties-common
+
+- name: Install docker GPG key
+  shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  tags:
+    - docker
+    - gpg_key
+
+- name: Add docker apt repository
+  #apt_repository: repo="deb https://apt.dockerproject.org/repo {{ ansible_distribution|lower }}-{{ ansible_distribution_release }} main" state=present
+  #apt_key: url: https://download.docker.com/linux/ubuntu/gpg
+  apt_repository: repo='deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable' state=present
+  tags:
+    - docker
+    - apt_repository
+
+- name: Update apt-cache
+  apt: update_cache=yes
+  tags:
+    - docker
+    - apt_cache
+
+- name: Purge the old repo if it exists
+  apt: name={{ item }} purge=yes
+  with_items:
+    - "lxc-docker*"
+    - "docker-ce"
+    - "docker.io*"
+  ignore_errors: yes
+  tags:
+    - docker
+    - apt_purge
+
+- name: Install docker package
+  apt: name=docker-ce state=present force=yes 
+  notify: handler 2
+  tags:
+    - docker
+    - install

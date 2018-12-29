@@ -1,0 +1,13 @@
+---
+# tasks file for docker
+- name: Install docker and dependencies for centos
+  include_tasks: "os_family/centos.yml"
+  when:  ansible_distribution == "CentOS"
+
+- name: Install docker and dependiances for ubuntu
+  include_tasks: "os_family/ubuntu.yml"
+  when:  ansible_distribution == "Ubuntu"
+
+- name: Configure docker
+  include_tasks: "configuration.yml"
+

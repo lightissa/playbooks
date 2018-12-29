@@ -1,0 +1,11 @@
+---
+# handlers file for docker
+#
+
+- name: handler 1
+  debug:
+   msg: "handler 1 run"
+
+- name: handler 2
+  debug:
+    msg: "Start docker"  

@@ -1,0 +1,8 @@
+---
+- name: enable kubelet
+  service: enabled=yes name=kubelet
+
+- name: start docker
+  service:
+    name=kubelet
+    state=restarted

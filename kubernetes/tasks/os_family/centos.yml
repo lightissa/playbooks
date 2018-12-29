@@ -1,0 +1,38 @@
+---
+- name: Ensure that yum works with the https method
+  yum: name={{ item }} state=present
+  with_items:
+    - yum-utils
+
+#- name: add kubernetes key
+ # shell: yum-config-manager --add-repo https://packages.cloud.google.com/yum/doc/yum-key.gpg
+
+
+- name: Add Kubernetes yum repo
+  yum_repository:
+    name: Kubernetes
+    description: Kubernetes
+    file: kubernetes
+    baseurl: http://yum.kubernetes.io/repos/kubernetes-el7-x86_64
+    enabled: true
+    gpgcakey: https://packages.cloud.google.com/yum/doc/yum-key.gpg
+    gpgkey: https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg  
+    gpgcheck: true
+    state: present
+
+- name: yum update
+  shell: yum update -y
+  #yum: update_cache=yes
+  #notify: yum update
+
+- name: Install kubernetes package
+  yum: name={{ item }} state=present update_cache=yes
+  with_items:
+    - kubelet
+    - kubeadm
+    - kubectl
+  notify: Install Kubernetes
+  tags:
+    - kubernetes
+    - install
+

@@ -1,0 +1,42 @@
+---
+- name: Ensure that APT works with the https method
+  apt: name={{ item }} state=present
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - software-properties-common
+
+- name: installing repo for Java 8 in Ubuntu
+  apt_repository: repo='ppa:openjdk-r/ppa'
+
+#- name: Add the Java PPA repo
+ # apt_repository: 
+  # repo: ppa:webupd8team/java
+
+- name: Install GPG key
+  shell: curl https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+  tags:
+    - elasticsearch
+    - gpg_key
+
+- name: Add  apt repository
+  apt_repository: repo="deb https://artifacts.elastic.co/packages/5.x/apt stable main" state=present
+  tags:
+    - elasticsearch
+    - apt_repository
+
+- name: Update apt-cache
+  apt: update_cache=yes
+  tags:
+    - elasticsearch
+    - apt_cache
+
+- name: Install elasticsearch and java package
+  apt: name={{ item }}  state=present
+  notify: Install elasticsearch
+  with_items:
+    - openjdk-11-jdk
+    - oracle-java8-installer
+    - elasticsearch
+  tags:
+    - elasticsearch

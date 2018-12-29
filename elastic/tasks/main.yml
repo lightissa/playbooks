@@ -1,0 +1,12 @@
+---
+# tasks file for docker
+- name: Install elasticsearch and dependencies for centos
+  include_tasks: "os_family/centos.yml"
+  when:  ansible_distribution == "CentOS" 
+  
+- name: Install elasticsearch and dependiances for ubuntu
+  include_tasks: "os_family/ubuntu.yml"
+  when:  ansible_distribution == "Ubuntu"
+
+- name: Configure elasticsearch
+  include_tasks: "configuration.yml"
