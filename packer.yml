@@ -1,0 +1,5 @@
+- hosts: all
+  become: no
+  #become_method: sudo
+  roles:
+    - role: packer
