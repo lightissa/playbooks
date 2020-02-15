@@ -1,0 +1,11 @@
+---
+# vars file for lvm
+#
+disk_name: /dev/xvdb
+pvs_name: /dev/xvdb1 
+vg_name: vg1
+lv_name:
+   - lv1
+   - lv2
+#file_name:
+#mount_name:
