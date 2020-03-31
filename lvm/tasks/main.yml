@@ -5,8 +5,8 @@
 #  connection: ssh
 #  tasks:
    - name: Create Partition for file system
-     shell:
-       echo -e "n\np\n1\n\n\nt\n8e\nw" | sudo fdisk "{{ disk_name }}" ## Create the partition on a disk.
+    shell:
+      echo -e "n\np\n1\n\n\nt\n8e\nw" | sudo fdisk "{{ disk_name }}" ## Create the partition on a disk.
 
    - name: Create VG 
      lvg:

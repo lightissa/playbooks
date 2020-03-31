@@ -11,9 +11,9 @@ spec:
    rules:
      - host: "jenkins"
        http:
-       paths:
-         - backend:
-            serviceName: "jenkins-master-service"
-            servicePort: 80
-            path: "/"
+         paths:
+           - backend:
+              serviceName: "jenkins-master-service"
+              servicePort: 80
+             path: "/"
      
