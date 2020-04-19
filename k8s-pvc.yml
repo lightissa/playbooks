@@ -4,7 +4,8 @@ metadata:
   name: pvc-1
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
+  volumeMode: Block
   resources:
     requests:
       storage: 1Gi

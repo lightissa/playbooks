@@ -1,0 +1,16 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: simple-rbd
+provisioner: kubernetes.io/rbd
+parameters:
+  monitors: 192.168.1.212:6789, 192.168.1.198:6789, 192.168.1.52:6789
+  adminId: admin
+  adminSecretName: ceph-secret
+  adminSecretNamespace: kube-system
+  pool: kubernetes
+  userId: kubernetes
+  userSecretName: ceph-user-secret-1
+  userSecretNamespace: kube-system
+  imageFormat: "2"
+  imageFeatures: layering
