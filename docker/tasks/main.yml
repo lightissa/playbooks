@@ -8,6 +8,11 @@
   include_tasks: "os_family/ubuntu.yml"
   when:  ansible_distribution == "Ubuntu"
 
+
+- name: Install docker and dependiances for ubuntu
+  include_tasks: "os_family/debian.yml"
+  when:  ansible_distribution == "Debian"
+
 - name: Configure docker
   include_tasks: "configuration.yml"
 
