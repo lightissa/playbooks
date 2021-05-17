@@ -4,9 +4,14 @@
   with_items:
     - yum-utils
 
-#- name: add kubernetes key
- # shell: yum-config-manager --add-repo https://packages.cloud.google.com/yum/doc/yum-key.gpg
-
+- name: Make the Swap inactive
+  command: swapoff -a
+   
+- name: Remove Swap entry from /etc/fstab.
+  lineinfile:
+     dest: /etc/fstab
+     regexp: swap
+     state: absent
 
 - name: Add Kubernetes yum repo
   yum_repository:
@@ -22,17 +27,22 @@
 
 - name: yum update
   shell: yum update -y
-  #yum: update_cache=yes
-  #notify: yum update
 
-- name: Install kubernetes package
-  yum: name={{ item }} state=present update_cache=yes
+#- name: Install kubernetes package
+#  yum: name={{ item }} state=present update_cache=yes
+#  with_items:
+#    - kubelet
+#    - kubeadm
+#    - kubectl
+#  tags:
+#    - kubernetes
+#    - install
+
+- name: Install kubernetes packages
+  package:
+    name: "{{ item}}"
+    state: present
   with_items:
     - kubelet
     - kubeadm
     - kubectl
-  notify: Install Kubernetes
-  tags:
-    - kubernetes
-    - install
-

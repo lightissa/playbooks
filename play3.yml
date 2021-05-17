@@ -1,5 +1,11 @@
 - hosts: all
+  user: root
   become: yes
   become_method: sudo
+  environment:
+        http_proxy: http://proxy:8080
+        https_proxy: http://proxy:8080
   roles:
+    - role: user
+    - role: docker
     - role: kubernetes

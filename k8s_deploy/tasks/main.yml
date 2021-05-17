@@ -1,0 +1,12 @@
+---
+# tasks file for k8s_deploy
+
+- name: deploy k8s
+  import_tasks: "deploy.yml"
+  when: inventory_hostname in groups['master']|default([])
+  tags: init
+
+- name: add worker node
+  import_tasks: "workers.yml"
+  tags: worker
+  when: inventory_hostname in groups['worker']|default([])

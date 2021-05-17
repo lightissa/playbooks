@@ -1,2 +1,6 @@
 ---
 # vars file for kubernetes
+pod_network_cidr: 172.16.0.0/16
+user: ansible
+
+

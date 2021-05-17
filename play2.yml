@@ -1,5 +1,20 @@
 - hosts: all
   become: yes
+  user: cloudadm
+  gather_facts: true
   become_method: sudo
+  environment:
+    no_proxy: 127.0.0.1
+    http_proxy: http://proxy:8080
+    https_proxy: http://proxy:8080
   roles:
+    - role: lvol
+      tags: lvol
+    - role: hostname
+      tags: hostname
     - role: docker
+      tags: docker
+    - role: kubernetes
+      tags: kubernetes
+    - role: k8s_deploy
+      tags: deploy

@@ -1,0 +1,9 @@
+---
+# tasks file for hostname
+- name: Set a hostname
+  hostname:
+    name: "{{ hostname }}"
+  
+- debug:
+   msg: "{{ hostname }}"
+    

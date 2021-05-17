@@ -1,0 +1,8 @@
+---
+# tasks file for lvol
+- name: set the logical volume to 6G.
+  lvol:
+    vg: vg00
+    lv: lv_usr
+    resizefs: true
+    size: 6g

@@ -1,4 +1,13 @@
 ---
+- name: Make the Swap inactive
+  command: swapoff -a
+   
+- name: Remove Swap entry from /etc/fstab.
+  lineinfile:
+     dest: /etc/fstab
+     regexp: swap
+     state: absent
+
 - name: Ensure that APT works with the https method
   apt: name={{ item }} state=present
   with_items:

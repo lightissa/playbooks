@@ -2,10 +2,10 @@
 # handlers file for docker
 #
 
-- name: handler 1
-  debug:
-   msg: "handler 1 run"
+- name: start docker
+  become: true
+  become_method: sudo 
+  systemd:
+      name: docker
+      state: started
 
-- name: handler 2
-  debug:
-    msg: "Start docker"  

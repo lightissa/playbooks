@@ -13,6 +13,3 @@
   include_tasks: "os_family/debian.yml"
   when:  ansible_distribution == "Debian"
 
-- name: Configure docker
-  include_tasks: "configuration.yml"
-
